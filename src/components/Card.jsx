@@ -4,10 +4,13 @@ import { AiFillStar } from "react-icons/ai";
 export default function Card() {
   return (
     <div className="w-96 h-90 border p-6 bg-backgroundDarkBlue text-white font-light rounded-lg opacity-90 snap-center shadow-2xl ">
-      <div className="border w-8 h-8 flex justify-center items-center rounded-full mb-4 ">
-        <a href="#">
-          <AiFillStar />
-        </a>
+      <div className=" flex justify-between items-center mb-4 ">
+        <div className="border w-8 h-8 flex justify-center items-center rounded-full  ">
+          <a href="#">
+            <AiFillStar />
+          </a>
+        </div>
+        <span className="border px-2 py-1 rounded-3xl ">Category</span>
       </div>
 
       <h2 className="text-3xl mb-3 text-left px-4">Task Title</h2>

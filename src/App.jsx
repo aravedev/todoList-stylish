@@ -2,17 +2,21 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 import Card from "./components/Card";
+import Form from "./components/Form";
 
 function App() {
   return (
-    <div className="container mx-auto flex justify-center items-center">
-      <div className="  mx-auto grid grid-flow-col auto-cols-auto gap-4 snap-x overflow-x-auto scroll-auto lg:max-w-lg p-4 scrollbar">
+    <main className="">
+      <div className=" mx-auto grid grid-flow-col auto-cols-auto gap-4 snap-x snap-mandatory overflow-x-auto scroll-auto lg:max-w-2xl p-4 scrollbar">
         <Card></Card>
         <Card></Card>
         <Card></Card>
         <Card></Card>
       </div>
-    </div>
+      <div className="mt-10 flex justify-center items-center">
+        <Form></Form>
+      </div>
+    </main>
   );
 }
 
