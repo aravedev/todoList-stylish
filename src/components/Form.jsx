@@ -31,17 +31,24 @@ export default function Form() {
     setInputText(inputText);
   };
 
-  const handleCategory = () => {
+  const handleCategory = (event) => {
     const nameCategory = event.target.value;
     setCategory(nameCategory);
   };
 
   useEffect(() => {
     () => handleAddNewTask();
-  }, []);
+    if (task.length > 0) {
+      //console.log("Say hi");
+      // console.log(task);
+      localStorage.setItem("task", JSON.stringify(task));
+      //console.log(parse);
+    }
+  }, [task]);
 
   const handleAddNewTask = () => {
     const obj = {
+      id: task.length,
       title: inputText,
       description: inputTextArea,
       category: category,
@@ -50,8 +57,6 @@ export default function Form() {
 
     setTask((prevState) => [obj, ...prevState]);
   };
-
-  console.log(task);
 
   return (
     <div className="w-96 h-90 border p-6 bg-backgroundDarkBlue text-white font-light rounded-lg opacity-90 snap-center shadow-2xl flex flex-col">
@@ -86,6 +91,7 @@ export default function Form() {
             className="bg-backgroundDarkBlue"
             onChange={handleCategory}
           >
+            <option value="--">-- --</option>
             <option value="hobbies">Hobbies</option>
             <option value="grocery">Grocery</option>
             <option value="work">Work</option>
