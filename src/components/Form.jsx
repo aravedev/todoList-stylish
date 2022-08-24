@@ -3,8 +3,9 @@ import { useState } from "react";
 import { BiEdit } from "react-icons/bi";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { useEffect } from "react";
+import { nanoid } from "nanoid";
 
-export default function Form() {
+export default function Form(props) {
   const [task, setTask] = useState([]);
   const [inputText, setInputText] = useState("");
   const [inputTextArea, setInputTextArea] = useState("");
@@ -36,27 +37,31 @@ export default function Form() {
     setCategory(nameCategory);
   };
 
+  /*
   useEffect(() => {
     () => handleAddNewTask();
     if (task.length > 0) {
-      //console.log("Say hi");
-      // console.log(task);
       localStorage.setItem("task", JSON.stringify(task));
-      //console.log(parse);
     }
   }, [task]);
-
+*/
   const handleAddNewTask = () => {
     const obj = {
-      id: task.length,
+      id: nanoid(10),
       title: inputText,
       description: inputTextArea,
       category: category,
       important: starImportant,
     };
 
-    setTask((prevState) => [obj, ...prevState]);
+    // console.log(obj);
+    // just changed this section
+    //setTask((prevState) => [obj, ...prevState]);
+
+    return obj;
   };
+
+  //console.log(props);
 
   return (
     <div className="w-96 h-90 border p-6 bg-backgroundDarkBlue text-white font-light rounded-lg opacity-90 snap-center shadow-2xl flex flex-col">
@@ -101,7 +106,7 @@ export default function Form() {
       </div>
       <div className=" grid  gap-4 place-items-end ">
         <div className="bg-yellow-50 w-12 h-12 rounded-[25px] px-4 py-2 font-bold text-buttonOrange hover:bg-buttonOrange hover:text-white mb-3 flex justify-center items-center">
-          <a href="#" onClick={handleAddNewTask}>
+          <a href="#" onClick={() => props.memos(handleAddNewTask())}>
             <BiEdit className="w-8 h-8"></BiEdit>
           </a>
         </div>
@@ -109,3 +114,7 @@ export default function Form() {
     </div>
   );
 }
+
+/*
+onClick={handleAddNewTask}>
+*/
