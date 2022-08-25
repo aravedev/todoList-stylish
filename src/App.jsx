@@ -4,10 +4,17 @@ import "./App.css";
 import Card from "./components/Card";
 import Form from "./components/Form";
 import { nanoid } from "nanoid";
+
 function App() {
   const [memos, setMemos] = useState(
     () => JSON.parse(localStorage.getItem("task")) || []
   );
+
+  const [editCard, setEditCard] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem("task", JSON.stringify(memos));
+  }, [memos]);
 
   function deleteTask(id) {
     const memosList = memos.filter((task) => task.id !== id);
