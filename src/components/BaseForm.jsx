@@ -1,65 +1,65 @@
 import React from "react";
+
 import { useState } from "react";
 import { BiEdit } from "react-icons/bi";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
-import { nanoid } from "nanoid";
+export default function BaseForm(props) {
+  const [starEditImportant, setStartEditImportant] = useState(false);
+  const [editInputForm, setEditInputForm] = useState("");
+  const [editTextAreaForm, setEditTextAreaForm] = useState("");
+  const [editCategory, setEditCategory] = useState("");
 
-export default function Form(props) {
-  const [inputText, setInputText] = useState("");
-  const [inputTextArea, setInputTextArea] = useState("");
-  const [starImportant, setStartImportant] = useState(false);
-  const [category, setCategory] = useState("");
+  const resumeProps = props.dataInfoTask;
 
-  const starImage = starImportant ? (
+  const starImage = starEditImportant ? (
     <AiFillStar></AiFillStar>
   ) : (
     <AiOutlineStar></AiOutlineStar>
   );
 
   const handleStarImportantIcon = () => {
-    setStartImportant(!starImportant);
+    setStartEditImportant(!starEditImportant);
   };
 
-  const handleInputTextArea = (event) => {
-    let textArea = event.target.value;
-    setInputTextArea(textArea);
-  };
+  function handleEditInputForm(event) {
+    const title = event.target.value;
+    setEditInputForm(title);
+  }
 
-  const handleInputText = (event) => {
-    let inputText = event.target.value;
-    setInputText(inputText);
-  };
+  function handleEditTextArea(event) {
+    const textArea = event.target.value;
+    setEditTextAreaForm(textArea);
+  }
 
-  const handleCategory = (event) => {
-    const nameCategory = event.target.value;
-    setCategory(nameCategory);
-  };
+  function handleEditCategory(event) {
+    const category = event.target.value;
+    setEditCategory(category);
+  }
 
-  const handleAddNewTask = () => {
+  function handleEditTask() {
     const obj = {
-      id: nanoid(10),
-      important: starImportant,
-      title: inputText,
-      description: inputTextArea,
-      category: category,
+      id: resumeProps.id,
+      important: starEditImportant,
+      title: editInputForm,
+      description: editTextAreaForm,
+      category: editCategory,
     };
 
     return obj;
-  };
+  }
 
-  const handleSubmit = (event) => {
+  function HideForm() {
+    return false;
+  }
+
+  function handleOnSubmit(event) {
     event.preventDefault();
     event.target.reset();
-    setStartImportant(!starImportant);
-  };
-
-  const handleHiddenForm = (bol) => {
-    setPopUp(!popUp);
-  };
+  }
 
   return (
-    <form onSubmit={handleSubmit} className="-z-20">
+    <form onSubmit={handleOnSubmit}>
       <div className="w-96 h-90 border p-6 bg-backgroundDarkBlue text-white font-light rounded-lg opacity-90 snap-center shadow-2xl flex flex-col">
         <div className=" flex justify-around items-baseline mb-2">
           <span className="font-semibold ">Mark as Important</span>
@@ -72,25 +72,25 @@ export default function Form(props) {
 
         <div className="mb-4 flex flex-col items-start justify-center  p-2">
           <input
-            onChange={handleInputText}
+            onChange={handleEditInputForm}
             type="text"
-            placeholder=" Add Title"
+            placeholder={resumeProps.title}
             className="mb-2 w-3/4 rounded-lg py-1 text-black font-semibold px-5 "
           />
           <textarea
-            onChange={handleInputTextArea}
+            onChange={handleEditTextArea}
             cols="36"
             rows="5"
             className="rounded-lg text-black font-semibold px-2"
-            placeholder=" Add Description..."
+            placeholder={resumeProps.description}
           ></textarea>
           <div className="w-full  p-2 flex justify-between">
             <label htmlFor="category">Category:</label>
             <select
+              onChange={handleEditCategory}
               name="category"
               id=""
               className="bg-backgroundDarkBlue"
-              onChange={handleCategory}
             >
               <option value="--">-- --</option>
               <option value="hobbies">Hobbies</option>
@@ -105,7 +105,10 @@ export default function Form(props) {
             <button
               type="submit"
               href="#"
-              onClick={() => props.memos(handleAddNewTask())}
+              onClick={() => {
+                props.EditeNote(handleEditTask());
+                props.activeTrigger(HideForm());
+              }}
             >
               <BiEdit className="w-8 h-8"></BiEdit>
             </button>
@@ -115,7 +118,3 @@ export default function Form(props) {
     </form>
   );
 }
-
-/*
-onClick={handleAddNewTask}>
-*/
